@@ -34,7 +34,7 @@
 
 #  Common Generation Law for rplidar sdk Building
 #
-#
+# 
 #
 
 .PHONY: make_subs build_sdk build_app clean_sdk clean_app

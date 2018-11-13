@@ -43,7 +43,7 @@ HOME_TREE:=$(realpath $(HOME_TREE))
 BUILD_ROOT  = $(HOME_TREE)
 
 #valid platforms are:
-#Linux Darwin
+#Linux Darwin Win
 
 #valid architectures are:
 #x86
