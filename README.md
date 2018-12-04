@@ -30,7 +30,7 @@ struct DetectionResult {
 }
 ```
 
-### License
+# License
 
 Copyright 2018 keenrangerAndHisFriends
 
