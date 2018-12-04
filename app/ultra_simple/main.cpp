@@ -35,6 +35,8 @@
 #include <netdb.h>
 #include <netinet/in.h>
 
+#include "objectDetection.cpp"
+
 #include "rplidar.h" //RPLIDAR standard sdk, all-in-one header
 
 #ifndef _countof
@@ -229,6 +231,7 @@ accept_new:
     // start scan...
     drv->startScan();
 
+    ObjectDetection objectDetection = ObjectDetection();
     // fetech result and print it out...
     while (1)
     {
@@ -260,54 +263,10 @@ accept_new:
                 distance = nodes[pos].distance_q2 / 4.0f;
                 quality = nodes[pos].sync_quality >> RPLIDAR_RESP_MEASUREMENT_QUALITY_SHIFT;
 
-                if (angle > 70 && angle <= 90)
-                {
-                    if (quality != 0 && distance != 0)
-                    {
-                        if (minDisLeft > distance)
-                        {
-                            minDisLeft = distance;
-                        }
-                    }
-                    else if (quality != 0 && distance == 0)
-                        state = 0;
-                }
-                else if (angle > 90 && angle <= 110)
-                {
-                    if (quality != 0 && distance != 0)
-                    {
-                        if (minDisRight > distance)
-                        {
-                            minDisRight = distance;
-                        }
-                    }
-                    else if (quality != 0 && distance == 0)
-                        state = 0;
-                }
-                // printf("theta: %03.2f Dist: %08.2f Q: %d \n",
-                //            angle,
-                //            distance,
-                //            quality);
+                objectDetection.processDetection(angle, quality);
             }
 
-            if (minDisLeft < 2000 && state != 0)
-            {
-                state = 3;
-            }
-            if (minDisRight < 2000 && state != 0)
-            {
-                state = 2;
-                if (minDisLeft < 2000)
-                {
-                    if (minDisLeft < minDisRight)
-                    {
-                        state = 3;
-                    }
-                }
-            }
-            if (minDisLeft < 800 || minDisRight < 800) {
-                state = 4;
-            }
+            state = objectDetection.processState();
 
             char tmp1[10];
             bzero(tmp1, 10);

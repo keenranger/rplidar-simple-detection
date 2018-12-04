@@ -37,13 +37,9 @@ class ObjectDetection
     {
     }
 
-    void setDetectionMethod(DetectionMethod method)
-    {
-    }
+    void setDetectionMethod(DetectionMethod method){}
 
-    void addDetectionArea(DetectionArea area)
-    {
-    }
+    void addDetectionArea(DetectionArea area) {}
 
     void processDetection(double angle, int quality)
     {
